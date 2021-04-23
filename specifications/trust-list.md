@@ -24,21 +24,23 @@ This specification specifies the Swedish national infrastructure data format for
 
 ## 2. DSC-TL Format
 
-The DSC-TL format is contained in a signed JSON Web Signature (JWS) according to [[RFC 7515](https://tools.ietf.org/html/rfc7515)].
+The DSC-TL is contained in a signed JSON Web Signature (JWS) according to [[RFC 7515](https://tools.ietf.org/html/rfc7515)].
 
-The key data is carried as unencoded payload according to [[RFC 7797](https://tools.ietf.org/html/rfc7797)]. The main reason for this is that the unencoded payload is significantly smaller in size, where the base64 encoded payload offers no advantages to motivate its larger size for the use of JWS according to this specification.
+The data is carried as unencoded payload according to [[RFC 7797](https://tools.ietf.org/html/rfc7797)]. The main reason for this is that the unencoded payload is significantly smaller in size, where the base64 encoded payload offers no advantages to motivate its larger size for the use of JWS according to this specification.
 As unencoded payload is only allowed in JWS, and not JSON Web Token (JWT) the design choice is therefore to use JWS instead of a JWT.
 
 ### 2.1. JWS Header
 
 The JWS header make use of the following header parameters:
 
-Header Parameter | Value/Description
----|---
-`typ`  | Set to the value `JOSE` to indicate that this is a JWS.
-`b64`  | As specified in  [[RFC 7797](https://tools.ietf.org/html/rfc7797)] is set to the value `false` to indicate unencoded payload.
-`alg` | Specifies the algorithm used to sign the JWS.
-`x5c` | Carries the signing certificate and optionally any supporting certificate that may be used to validate the signing certificate.
+Header Parameter | Value/Description | Precense
+---|---|---
+`typ`  | Set to the value `JOSE` to indicate that this is a JWS.|Mandatory
+`b64`  | As specified in  [[RFC 7797](https://tools.ietf.org/html/rfc7797)] is set to the value `false` to indicate unencoded payload.|Mandatory
+`alg` | Specifies the algorithm used to sign the JWS.|Mandatory
+`x5c` | Carries the signing certificate and optionally any supporting certificate that may be used to validate the signing certificate.|Mandatory
+`id`  | A unique identifier of an instance of the DSC-TL. If present, this ID MUST be updated everytime this DSC-TL is re-issued.|Optional
+`aud`  | An array of string identifiers, each identifying an intended audience for this DSC-TL| Optional
 
 ### 2.2. JWS Payload
 
