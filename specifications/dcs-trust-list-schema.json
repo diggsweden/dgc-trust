@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "DSC-TL format JSON Schema",
-    "description": "Schema defining the payload format for Document Signing Certificate - Trust List\n        information",
+    "description": "Schema defining the payload format for Document Signing Certificate - Trust List information",
     "type": "object",
     "required": [
         "iss",
@@ -19,11 +19,11 @@
             "type": "string"
         },
         "iat": {
-            "description": "Issued at time",
+            "description": "Issued at time (seconds since epoch)",
             "type": "integer"
         },
         "exp": {
-            "description": "Expirey time",
+            "description": "Expiration time (seconds since epoch)",
             "type": "integer"
         },
         "aud": {
@@ -35,7 +35,7 @@
             }
         },
         "dsc_trust_list": {
-            "description": "List of trusted DSC under each country ISO3166 2 letter code as key",
+            "description": "List of trusted DSC for each country where the country code (ISO 3166-1 alpha-2) is the key",
             "type": "object",
             "patternProperties": {
                 "^[A-Z]{2}$": {

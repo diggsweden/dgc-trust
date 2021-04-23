@@ -1,7 +1,13 @@
-# Swedish Digital Green Certificate Trust management
+![Logo](https://docs.swedenconnect.se/technical-framework/latest/img/digg_centered.png)
 
-Development of specifications and code for trust management related to Digital Green Certificates infrastructure
+# Swedish Digital Green Certificate Trust Management
 
-## References
+Development of specifications for trust management related to Digital Green Certificates infrastructure.
 
-- [Document Signer Certificate - Trust List  Specification](https://github.com/DIGGSweden/hcert-trust/blob/main/specifications/trust-list.md)
+## Specifications
+
+- [Document Signer Certificate - Trust List Specification](specifications/trust-list.md) - A document specifying the format for Document Signer Certificate (DSC) Trust List (DSC-TL).
+
+-----
+
+Copyright &copy; 2021, [Myndigheten för digital förvaltning - Swedish Agency for Digital Government (DIGG)](http://www.digg.se). Licensed under the MIT license.
