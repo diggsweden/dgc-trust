@@ -37,20 +37,32 @@ Header Parameter | Value/Description | Precense
 `typ`  | Set to the value `JOSE` to indicate that this is a JWS.|Mandatory
 `alg` | Specifies the algorithm used to sign the JWS.|Mandatory
 `x5c` | Carries the signing certificate and optionally any supporting certificate that may be used to validate the signing certificate.|Mandatory
-`id`  | A unique identifier of an instance of the DSC-TL. If present, this ID MUST be updated everytime this DSC-TL is re-issued.|Optional
-`aud`  | An array of string identifiers, each identifying an intended audience for this DSC-TL| Optional
 
 ### 2.2. JWS Payload
 
-The payload holds a map where each country data is keyed under its 2 letter ISO 3166-1 alpha-2 country code.
-The object under each country holds 2 objects:
+The JWS payload is a JSON object holding a value map of claims (similar to a JWT) according to the following table:
+
+Claim | Value/Description | Precense
+---|---|---
+`iss`  | Issuer as defined in section 4.1.1 in [[RFC 7519](https://tools.ietf.org/html/rfc7519)]  |  Mandatory
+`iat`  |  Issued at time as defined in section 4.1.6 in [[RFC 7519](https://tools.ietf.org/html/rfc7519)]  |  Mandatory
+`exp`  | Expiration time as defined in section 4.1.4 in [[RFC 7519](https://tools.ietf.org/html/rfc7519)]  |  Mandatory
+`dsc_trust_list`  | The DSC trust list (DSC-TL) holding a complete list of trusted DSC for each available country | Mandatory
+`id`  | A unique identifier of an instance of the DSC-TL. If present, this ID MUST be updated everytime this DSC-TL is re-issued.|Optional
+`aud`  | An array of string identifiers, each identifying an intended audience for this DSC-TL the value MUST be formatted in accordance with sectioin 4.1.3 of [[RFC 7519](https://tools.ietf.org/html/rfc7519)], but MUST be present as an Array of strings, even if only one audience is present | Optional
+
+> NOTE: the only difference between the claims in this table and a JWT [[RFC 7519](https://tools.ietf.org/html/rfc7519)] is the use if the claim `id` instead of `jti`, and that the `aud` claim, if present, allways is an array instead of being a choice between an array or a string. The latter makes the schema and implementation easier and less ambiguous. Note also that because this is NOT a JWT, the header MUST declare the type value `JOSE`.
+
+#### 2.2.1 DSC-TL
+
+The DSC-TL provided in the claim `dsc_trust_list` holds a map where each country data is keyed under its 2 letter ISO 3166-1 alpha-2 country code. The object under each country holds 2 objects:
 
 Object | Description
 --- | ---
 eku  | A map keyed under each DSC key ID (kid) expressing an array of Extended Key Usage OID (Object identifiers) defining the usage constraints for that DSC.
 keys  |  The JWK [[RFC7517](https://tools.ietf.org/html/rfc7517)] key data for each DSC valid for the specified country.
 
-#### 2.2.1 Design Considerations
+#### 2.2.2 Design Considerations
 
 The reason why the eku data is placed outside of the JWK set is to align with common implementations of JWK and to ensure the highest possible degree of compatibility with major software libraries. Even if the standard for JWK allows customized object items in the JWK, implementations such as Nimbus lacks the capability to natively add or parse such additional parameters.
 
