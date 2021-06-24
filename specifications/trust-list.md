@@ -1,8 +1,8 @@
 # Document Signer Certificate (DSC) Trust List - Format Specification
 
-> **Version:** 1.0.0 - draft
+> **Version:** 1.0.0
 
-> **Date:** 2021-05-03
+> **Date:** 2021-05-28
 
 ## Abstract
 
